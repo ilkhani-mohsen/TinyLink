@@ -34,7 +34,7 @@ namespace TinyLink.Common.Core.ApplicationServices
             return errorMessages;
 
         }
-        protected virtual async Task<ApplicationServiceResult<TResponse>> Execute<TRequest, TResponse>(TRequest request, Func<TRequest, Task<TResponse>> func)
+        protected virtual async Task<ApplicationServiceResult<TResponse>> Execute<TRequest, TResponse>(TRequest request, Func<TRequest, Task<ApplicationServiceResult<TResponse>>> handler)
         {
             try
             {
@@ -42,8 +42,7 @@ namespace TinyLink.Common.Core.ApplicationServices
                 if (errorMessages.Count() > 0)
                     return ValidationError<TResponse>(errorMessages.ToArray());
 
-                var data = await func(request);
-                return Ok(data);
+                return await handler(request);
             }
             catch (Exception ex)
             {

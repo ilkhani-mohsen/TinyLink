@@ -11,8 +11,4 @@
     <ProjectReference Include="..\TinyLink.Core.Domain\TinyLink.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="LinkVisitsLog\" />
-  </ItemGroup>
-
 </Project>

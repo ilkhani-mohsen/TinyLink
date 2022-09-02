@@ -32,7 +32,7 @@ namespace TinyLink.Core.ApplicationServices.Links
             return await Execute(request, GetLinkUrlByCodeHandler);
         }
 
-        private async Task<CreateLinkResponse> CreateLinkHandler(CreateLinkRequest request) 
+        private async Task<ApplicationServiceResult<CreateLinkResponse>> CreateLinkHandler(CreateLinkRequest request) 
         {
             var link = new Link()
             {
@@ -45,17 +45,20 @@ namespace TinyLink.Core.ApplicationServices.Links
 
             await linksRepository.AddLink(link);
 
-            return new CreateLinkResponse()
+            var data = new CreateLinkResponse()
             {
                 Code = link.Code
             };
+
+            return Ok(data);
         }
 
-        private async Task<GetLinkUrlByCodeResponse> GetLinkUrlByCodeHandler(GetLinkUrlByCodeRequest request) 
+        private async Task<ApplicationServiceResult<GetLinkUrlByCodeResponse>> GetLinkUrlByCodeHandler(GetLinkUrlByCodeRequest request) 
         {
             var link = await linksRepository.GetLinkByCode(request.Code);
 
-            // TODO: check if not exists link return 404. have to change response type of henadelr to ApplicationServiceResult
+            if (link == null || !link.IsVisible)
+                return NotFound<GetLinkUrlByCodeResponse>("کد وارد شده معتبر نیست.");
 
             var linkVisit = new LinkVisit()
             {
@@ -66,10 +69,12 @@ namespace TinyLink.Core.ApplicationServices.Links
 
             await linkVisitLogStrategy.Log(linkVisit);
 
-            return new GetLinkUrlByCodeResponse()
+            var data = new GetLinkUrlByCodeResponse()
             {
                 Url = link.Url
             };
+
+            return Ok(data);
         }
     }
 }
