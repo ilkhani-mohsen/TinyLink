@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using TinyLink.Core.ApplicationServices.Links;
-using TinyLink.Core.Domain.Links.Contracts;
+using Quartz;
+using TinyLink.Endpoints.Api.Jobs;
 using TinyLink.Persistence.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,21 @@ builder.Services.AddDbContext<TinyLinkDbContext>(options => options.UseSqlServer
 builder.Services.AddDependencies(options =>
 {
     options.AssembliesToLoad = new string[] { "TinyLink" };
+});
+
+builder.Services.AddQuartz(q => 
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+
+    q.AddJob<LinkVisitStatisticsSyncJob>(c => c.WithIdentity(nameof(LinkVisitStatisticsSyncJob)));
+    q.AddTrigger(c => c.ForJob(nameof(LinkVisitStatisticsSyncJob))
+        .WithIdentity($"{nameof(LinkVisitStatisticsSyncJob)}.trigger")
+        .WithCronSchedule(builder.Configuration["LinkVisitStatisticsSyncJobCronExpression"]));
+});
+
+builder.Services.AddQuartzServer(options =>
+{
+    options.WaitForJobsToComplete = true;
 });
 
 var app = builder.Build();
