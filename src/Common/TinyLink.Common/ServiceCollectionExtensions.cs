@@ -1,8 +1,8 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyModel;
-using Pei.Dependency;
 using System.Reflection;
 using TinyLink.Common;
+using TinyLink.Common.Dependency;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
