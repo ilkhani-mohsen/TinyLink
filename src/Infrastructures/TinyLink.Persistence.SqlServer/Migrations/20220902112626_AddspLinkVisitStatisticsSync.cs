@@ -26,14 +26,14 @@ script =
 " " +
 "		BEGIN TRAN " +
 " " +
-"		UPDATE LinkVisits " +
+"		DELETE LinkVisits " +
 "			SET IsProcessed = 1 " +
 "			OUTPUT INSERTED.LinkId, INSERTED.VisitedAt INTO @tbl " +
 "			WHERE IsProcessed = 0; " +
 " " +
 "		;WITH A AS( " +
 "			SELECT LinkId, FORMAT(VisitedAt, N'yyyy') Y, FORMAT(VisitedAt, N'MM') M, FORMAT(VisitedAt, N'dd') D, FORMAT(VisitedAt, N'HH') H " +
-"				FROM LinkVisits " +
+"				FROM @tbl " +
 "		) " +
 "		INSERT INTO @tbl_grouped(LinkId, Y, M, D, H, VisitCount) " +
 "			SELECT LinkId, Y, M, D, H, COUNT(0) " +
