@@ -1,6 +1,6 @@
 ﻿namespace TinyLink.Common.Core.Domain.Entities
 {
-    public interface Entity<TPrimaryKey>
+    public abstract class Entity<TPrimaryKey>
     {
         TPrimaryKey Id { get; set; }
     }
