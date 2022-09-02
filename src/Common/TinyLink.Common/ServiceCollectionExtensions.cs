@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyModel;
 using System.Reflection;
 using TinyLink.Common;
+using TinyLink.Common.Core.ApplicationServices;
 using TinyLink.Common.Dependency;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -14,7 +15,9 @@ namespace Microsoft.Extensions.DependencyInjection
             action?.Invoke(options);
             services.AddSingleton(options);
 
-            var assemblies = LoadAssemblies();
+            var assemblies = LoadAssemblies(options.AssembliesToLoad.ToArray());
+
+            services.AddScoped<ApplicationServiceContext>();
 
             services.AddWithSingletonLifetime(assemblies, new[] { typeof(ISingletonLifetime) });
             services.AddWithScopedLifetime(assemblies, new[] { typeof(IScopedLifetime) });
@@ -65,7 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var dependencies = DependencyContext.Default.RuntimeLibraries;
             foreach (var dependency in dependencies)
             {
-                if (assemblyNames.Any(x => x.Contains(dependency.Name, StringComparison.OrdinalIgnoreCase)))
+                if (assemblyNames.Any(x => dependency.Name.Contains(x, StringComparison.OrdinalIgnoreCase)))
                 {
                     var assembly = Assembly.Load(new AssemblyName(dependency.Name));
                     assemblies.Add(assembly);

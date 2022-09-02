@@ -15,10 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\Core\TinyLink.Core.ApplicationServices\TinyLink.Core.ApplicationServices.csproj" />
     <ProjectReference Include="..\..\Infrastructures\TinyLink.Persistence.SqlServer\TinyLink.Persistence.SqlServer.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using TinyLink.Core.ApplicationServices.Links;
+using TinyLink.Core.Domain.Links.Contracts;
 using TinyLink.Persistence.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
