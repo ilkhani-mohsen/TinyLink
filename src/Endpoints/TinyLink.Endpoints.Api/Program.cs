@@ -12,6 +12,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<TinyLinkDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDependencies(options =>
+{
+    options.AssembliesToLoad = new string[] { "TinyLink" };
+});
 
 var app = builder.Build();
 

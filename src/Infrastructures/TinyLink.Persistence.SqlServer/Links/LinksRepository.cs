@@ -1,9 +1,10 @@
-﻿using TinyLink.Core.Domain.Links.Contracts;
+﻿using TinyLink.Common.Dependency;
+using TinyLink.Core.Domain.Links.Contracts;
 using TinyLink.Core.Domain.Links.Entities;
 
 namespace TinyLink.Persistence.SqlServer.Links
 {
-    public class LinksRepository : ILinksRepository
+    public class LinksRepository : ILinksRepository, IScopedLifetime
     {
         private readonly TinyLinkDbContext dbContext;
 

@@ -1,8 +1,9 @@
-﻿using TinyLink.Core.Domain.Links.Contracts;
+﻿using TinyLink.Common.Dependency;
+using TinyLink.Core.Domain.Links.Contracts;
 
 namespace TinyLink.Core.ApplicationServices.Links
 {
-    public class UrlHasherGuid : IUrlHasher
+    public class UrlHasherGuid : IUrlHasher, ISingletonLifetime
     {
         public Task<string> Hash(string url)
         {

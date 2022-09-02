@@ -1,11 +1,12 @@
 ﻿using TinyLink.Common.Core.ApplicationServices;
+using TinyLink.Common.Dependency;
 using TinyLink.Core.Domain.Links.Contracts;
 using TinyLink.Core.Domain.Links.Entities;
 using TinyLink.Core.Domain.Links.Models;
 
 namespace TinyLink.Core.ApplicationServices.Links
 {
-    public class LinksApplicationService : ApplicationService<LinksApplicationService>, ILinksApplicationService
+    public class LinksApplicationService : ApplicationService<LinksApplicationService>, ILinksApplicationService, IScopedLifetime
     {
         private readonly ILinksRepository linksRepository;
         private readonly IUrlHasher urlHasher;
