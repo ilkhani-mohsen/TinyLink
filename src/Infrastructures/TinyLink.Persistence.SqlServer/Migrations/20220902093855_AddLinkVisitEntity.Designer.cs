@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TinyLink.Persistence.SqlServer;
 
@@ -11,9 +12,10 @@ using TinyLink.Persistence.SqlServer;
 namespace TinyLink.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(TinyLinkDbContext))]
-    partial class TinyLinkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220902093855_AddLinkVisitEntity")]
+    partial class AddLinkVisitEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -17,9 +17,22 @@ namespace TinyLink.Endpoints.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLink(CreateLinkRequest request) 
+        public async Task<IActionResult> CreateLink(CreateLinkRequest request)
         {
             var result = await linksApplicationService.CreateLink(request);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{code}")]
+        public async Task<IActionResult> GetLinkUrlByCode(string code)
+        {
+            var request = new GetLinkUrlByCodeRequest()
+            {
+                Code = code
+            };
+
+            var result = await linksApplicationService.GetLinkUrlByCode(request);
             return Ok(result);
         }
     }
